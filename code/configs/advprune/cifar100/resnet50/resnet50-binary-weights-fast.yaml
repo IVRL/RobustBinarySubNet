@@ -1,0 +1,38 @@
+# Architecture
+model_type: cResNet50_cifar100
+
+# ===== Dataset ===== #
+dataset: CIFAR100
+num_classes: 100
+log_dir: ./runs/cifar100-resnet50-binary-weights-fast/
+normalize: cifar100
+valid_ratio: 0.02
+
+# ===== Learning Rate Policy ======== #
+optimizer: sgd
+lr: 0.1
+lr_policy: cosine_lr
+alpha: 0
+
+# ===== Network training config ===== #
+epochs: 100
+weight_decay: 0.0005
+momentum: 0.9
+batch_size: 256
+trainer: adv_step_fast
+attack: {name: FGSM-RS, step_size: 2, threshold: 4, n_class: 100}
+eval_attack: {name: PGD, step_size: 1, threshold: 4, iter_num: 10}
+
+# ===== Sparsity =========== #
+conv_type: SubnetConv
+bn_type: NonAffineBatchNorm
+freeze_weights: True
+init: binary
+mode: fan_in
+nonlinearity: relu
+# prune_rate: 0.01
+scale_fan: True
+
+# ===== Hardware setup ===== #
+workers: 20
+seed: 1234

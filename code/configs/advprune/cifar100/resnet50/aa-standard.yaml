@@ -1,0 +1,25 @@
+# Architecture
+model_type: cResNet50_cifar100
+
+# ===== Dataset ===== #
+dataset: CIFAR100
+num_classes: 100
+log_dir: ./runs/cifar100-resnet50/aa
+normalize: cifar100
+
+# ===== Network training config ===== #
+batch_size: 512
+attack: {norm: Linf, threshold: 4}
+subset: test
+
+# ===== Sparsity =========== #
+conv_type: SubnetConv
+bn_type: NonAffineBatchNorm
+freeze_weights: True
+mode: fan_in
+nonlinearity: relu
+scale_fan: True
+
+# ===== Hardware setup ===== #
+workers: 20
+seed: 1234

@@ -1,0 +1,40 @@
+# Architecture
+model_type: ResNet34_001_p1
+
+# ===== Dataset ===== #
+dataset: CIFAR10
+num_classes: 10
+log_dir: ./runs/cifar10-resnet34-001-p1/
+normalize: cifar10
+valid_ratio: 0.02
+
+# ===== Learning Rate Policy ======== #
+# optimizer: sgd
+# lr: 0.001
+# lr_policy: cosine_lr
+# alpha: 0
+optimizer: adam
+lr: 0.0005
+lr_policy: cosine_lr
+alpha: 0
+
+# ===== Network training config ===== #
+epochs: 400
+weight_decay: 0.0005
+momentum: 0.9
+batch_size: 512
+trainer: adv_trades
+beta: 6.0
+trades_attack: {name: TradesKL, step_size: 2, threshold: 8, iter_num: 10}
+attack: {name: PGD, step_size: 2, threshold: 8, iter_num: 10}
+
+# ===== Sparsity =========== #
+conv_type: BinConv
+bn_type: LearnedBatchNorm
+nonlinearity: relu
+# init: binary
+prune_rate: 1.0
+
+# ===== Hardware setup ===== #
+workers: 20
+seed: 1234

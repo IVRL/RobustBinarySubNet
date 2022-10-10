@@ -1,0 +1,19 @@
+# ===== Dataset ===== #
+dataset: CIFAR10
+num_classes: 10
+log_dir: ./runs/cifar10-smallnet/aa
+normalize: cifar10
+
+# ===== Network training config ===== #
+batch_size: 512
+attack: {norm: Linf, threshold: 8}
+subset: test
+
+# ===== Sparsity =========== #
+conv_type: BinConv
+bn_type: LearnedBatchNorm
+nonlinearity: relu
+
+# ===== Hardware setup ===== #
+workers: 20
+seed: 1234

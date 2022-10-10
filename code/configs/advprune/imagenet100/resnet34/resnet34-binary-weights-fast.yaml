@@ -1,0 +1,40 @@
+# Architecture
+model_type: ResNet34_imagenet100
+
+# ===== Dataset ===== #
+dataset: ImageNet100
+num_classes: 100
+log_dir: ./runs/imagenet100-resnet34-binary-weights-fast/
+normalize: imagenet100
+valid_ratio: 0.02
+
+# ===== Learning Rate Policy ======== #
+optimizer: sgd
+lr: 0.1
+lr_policy: cosine_lr
+alpha: 0
+warmup_length: 5
+
+# ===== Network training config ===== #
+epochs: 100
+weight_decay: 0.000030517578125
+momentum: 0.875
+batch_size: 256
+label_smoothing: 0.1
+trainer: adv_step_fast
+attack: {name: FGSM-RS, step_size: 1, threshold: 2, n_class: 100}
+eval_attack: {name: PGD, step_size: 0.00196078, threshold: 2, iter_num: 10}
+
+# ===== Sparsity =========== #
+conv_type: SubnetConv
+bn_type: NonAffineBatchNorm
+freeze_weights: True
+init: binary
+mode: fan_in
+nonlinearity: relu
+# prune_rate: 0.01
+scale_fan: True
+
+# ===== Hardware setup ===== #
+workers: 20
+seed: 1234

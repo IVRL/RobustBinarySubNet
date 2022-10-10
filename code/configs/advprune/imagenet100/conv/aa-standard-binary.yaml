@@ -1,0 +1,19 @@
+# ===== Dataset ===== #
+dataset: ImageNet100
+num_classes: 100
+log_dir: ./runs/imagenet100-smallnet/aa
+normalize: imagenet100
+
+# ===== Network training config ===== #
+batch_size: 512
+attack: {norm: Linf, threshold: 2}
+subset: test
+
+# ===== Sparsity =========== #
+conv_type: BinConv
+bn_type: LearnedBatchNorm
+nonlinearity: relu
+
+# ===== Hardware setup ===== #
+workers: 20
+seed: 1234

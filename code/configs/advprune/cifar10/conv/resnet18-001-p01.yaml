@@ -1,0 +1,34 @@
+# Architecture
+model_type: ResNet18_001_p01
+
+# ===== Dataset ===== #
+dataset: CIFAR10
+num_classes: 10
+log_dir: ./runs/cifar10-resnet18-001/
+normalize: cifar10
+valid_ratio: 0.02
+
+# ===== Learning Rate Policy ======== #
+optimizer: sgd
+lr: 0.01
+lr_policy: multistep_lr
+lr_gamma: 0.1
+lr_adjust: 100
+
+# ===== Network training config ===== #
+epochs: 400
+weight_decay: 0.0005
+momentum: 0.9
+batch_size: 512
+trainer: adv_step
+attack: {name: PGD, step_size: 2, threshold: 8, iter_num: 10}
+
+# ===== Sparsity =========== #
+conv_type: DenseConv
+bn_type: LearnedBatchNorm
+nonlinearity: relu
+prune_rate: 1.0
+
+# ===== Hardware setup ===== #
+workers: 20
+seed: 1234
